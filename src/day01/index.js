@@ -1,43 +1,66 @@
 import run from "aocrunner";
 
-const parseInput = (rawInput) => rawInput;
+const parseInput = (rawInput) => {
+  const splitByBlankLine = rawInput.split("\n\n");
+  const splitByLine = splitByBlankLine.map(data => data.split("\n"))
+  return splitByLine.map(data => data.reduce((partial, a) => partial + parseInt(a), 0)).sort((a,b) => a - b)
+};
+
 
 const part1 = (rawInput) => {
   const input = parseInput(rawInput);
-
-  let splitByBlankLine = input.split("\n\n");
-  let splitByLine = splitByBlankLine.map(data => data.split("\n"))
-  let elfTotalCalories = splitByLine.map(data => data.reduce((partial, a) => partial + parseInt(a), 0))
-  return Math.max(...elfTotalCalories);
+  return input.slice(-1)[0];
 };
 
 const part2 = (rawInput) => {
   const input = parseInput(rawInput);
-
-  let splitByBlankLine = input.split("\n\n");
-  let splitByLine = splitByBlankLine.map(data => data.split("\n"))
-  let elfTotalCalories = splitByLine.map(data => data.reduce((partial, a) => partial + parseInt(a), 0))
-  // above is from part 1
-  let elfTotalCaloriesSorted = elfTotalCalories.sort((a,b) => a - b)
-  return elfTotalCaloriesSorted.slice(-3).reduce((partial, a) => partial + a, 0)
+  return input.slice(-3).reduce((partial, a) => partial + a, 0)
 };
 
 run({
   part1: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `
+        1000
+        2000
+        3000
+
+        4000
+
+        5000
+        6000
+
+        7000
+        8000
+        9000
+
+        10000`,
+        expected: 24000,
+      },
     ],
     solution: part1,
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `
+        1000
+        2000
+        3000
+
+        4000
+
+        5000
+        6000
+
+        7000
+        8000
+        9000
+
+        10000`,
+        expected: 45000,
+      },
     ],
     solution: part2,
   },
