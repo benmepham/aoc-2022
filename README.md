@@ -61,6 +61,12 @@ Example:
 npm start 1
 ```
 
+## Work Specific Setup
+
+Workaround for proxy (add to .env file): `NODE_TLS_REJECT_UNAUTHORIZED=0`
+
+Use correct node version (need nvm installed): `nvm use`
+
 ---
 
 ## Results
