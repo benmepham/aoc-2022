@@ -2,23 +2,9 @@ import run from "aocrunner";
 
 const parseInput = (rawInput) => rawInput.split("\n");
 
-const part1 = (rawInput) => {
-  const input = parseInput(rawInput);
-  let commonItems = []
-  let newBag;
-  for (let bag of input) {
-    newBag = true
-    const firstCompartment = bag.slice(0, bag.length / 2)
-    const secondCompartment = bag.slice(bag.length / 2, bag.length)
-    for (let item of firstCompartment) {
-      if (secondCompartment.includes(item) && newBag === true) {
-        newBag = false;
-        commonItems.push(item);
-      }
-    }
-  }
+const calcTotalPriority = (items) => {
   let val = 0;
-  for (let character of commonItems) {
+  for (let character of items) {
     if (character === character.toUpperCase())
       val += character.charCodeAt()-38;
     else 
@@ -27,10 +13,34 @@ const part1 = (rawInput) => {
   return val;
 };
 
+const part1 = (rawInput) => {
+  const input = parseInput(rawInput);
+  let commonItems = [];
+  for (let bag of input) {
+    const firstCompartment = bag.slice(0, bag.length / 2);
+    const secondCompartment = bag.slice(bag.length / 2, bag.length);
+    for (let item of firstCompartment) {
+      if (secondCompartment.includes(item)) {
+        commonItems.push(item);
+        break;
+      }
+    }
+  }
+  return calcTotalPriority(commonItems);
+};
+
 const part2 = (rawInput) => {
   const input = parseInput(rawInput);
-
-  return;
+  let commonItems = [];
+  for (let i=0; i< input.length; i+=3) {
+    for (let item of input[i]) {
+      if (input[i+1].includes(item) && input[i+2].includes(item)) {
+        commonItems.push(item);
+        break;
+      }
+    }
+  }
+  return calcTotalPriority(commonItems);
 };
 
 run({
@@ -52,10 +62,17 @@ run({
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `
+        vJrwpWtwJgWrhcsFMMfFFhFp
+        jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+        PmmdzqPrVvPwwTWBwg
+        wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+        ttgJtRGJQctTZtZT
+        CrZsJsPPZsGzwwsLwLmpwMDw
+        `,
+        expected: 70,
+      },
     ],
     solution: part2,
   },
