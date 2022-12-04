@@ -1,25 +1,40 @@
 import run from "aocrunner";
 
-const parseInput = (rawInput) => rawInput.split("\n");
+const parseInput = (rawInput) =>
+  rawInput
+    .split("\n")
+    .map((line) =>
+      line
+        .split(",")
+        .map((item) => item.split("-").map((num) => parseInt(num))),
+    );
 
+const checkContains = (pt1, pt2) =>
+  (pt1[0] >= pt2[0] && pt1[1] <= pt2[1]) ||
+  (pt2[0] >= pt1[0] && pt2[1] <= pt1[1]);
+
+// Using for loop
 const part1 = (rawInput) => {
   const input = parseInput(rawInput);
   let sum = 0;
   for (let line of input) {
-    let lineArr = line.split(",").map(item => item.split("-").map(num => parseInt(num)));
-    if (lineArr[0][0] >= lineArr[1][0] && lineArr[0][1] <= lineArr[1][1])
-      sum+=1
-    else if (lineArr[1][0] >= lineArr[0][0] && lineArr[1][1] <= lineArr[0][1])
-      sum+=1
+    if (checkContains(line[0], line[1])) sum += 1;
   }
   return sum;
 };
 
-const part2 = (rawInput) => {
-  const input = parseInput(rawInput);
+const checkOverlap = (pt1, pt2) =>
+  (pt1[0] >= pt2[0] && pt1[0] <= pt2[1]) ||
+  (pt1[1] >= pt2[0] && pt1[1] <= pt2[1]) ||
+  (pt2[0] >= pt1[0] && pt2[0] <= pt1[1]) ||
+  (pt2[1] >= pt1[0] && pt2[1] <= pt1[1]);
 
-  return;
-};
+// Using .reduce
+const part2 = (rawInput) =>
+  parseInput(rawInput).reduce(
+    (partial, line) => (checkOverlap(line[0], line[1]) ? partial + 1 : partial),
+    0,
+  );
 
 run({
   part1: {
@@ -40,10 +55,17 @@ run({
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `
+        2-4,6-8
+        2-3,4-5
+        5-7,7-9
+        2-8,3-7
+        6-6,4-6
+        2-6,4-8
+        `,
+        expected: 4,
+      },
     ],
     solution: part2,
   },
