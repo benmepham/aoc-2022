@@ -2,9 +2,8 @@ import run from "aocrunner";
 
 const parseInput = (rawInput) => {
   let input = rawInput.split("\n");
-  let arr = [];
+  let stacks = [];
   let instructions = [];
-  let readIns = false;
   for (let line of input) {
     if (!line.replace(/\s/g, "").length) continue;
     if (line[0] != "m") {
@@ -17,54 +16,48 @@ const parseInput = (rawInput) => {
           index++;
           continue;
         }
-        while (arr.length <= index) arr.push([]);
-        arr[index++].push(line[i]);
+        while (stacks.length <= index) stacks.push([]);
+        stacks[index++].push(line[i]);
       }
     } else {
       instructions.push(line);
     }
   }
-  return [arr, instructions];
+  return [stacks, instructions];
 };
 
 const part1 = (rawInput) => {
   let [stacks, instructions] = parseInput(rawInput);
   for (let instruction of instructions) {
-    const instruction_arr = instruction.split(" ");
-    for (let i = 0; i < parseInt(instruction_arr[1]); i++) {
-      let temp = stacks[parseInt(instruction_arr[3]) - 1].shift();
-      stacks[parseInt(instruction_arr[5]) - 1].unshift(temp);
+    const instructionsArr = instruction.split(" ");
+    for (let i = 0; i < parseInt(instructionsArr[1]); i++) {
+      stacks[parseInt(instructionsArr[5]) - 1].unshift(
+        stacks[parseInt(instructionsArr[3]) - 1].shift(),
+      );
     }
   }
-  let output = [];
-  for (let stack of stacks) {
-    output.push(stack[0]);
-  }
-  return output.join("");
+  return stacks.flatMap((stack) => stack[0]).join("");
 };
 
 const part2 = (rawInput) => {
   let [stacks, instructions] = parseInput(rawInput);
   for (let instruction of instructions) {
-    const instruction_arr = instruction.split(" ");
-    if (instruction_arr[1] == "1") {
-      let temp = stacks[parseInt(instruction_arr[3]) - 1].shift();
-      stacks[parseInt(instruction_arr[5]) - 1].unshift(temp);
+    const instructionsArr = instruction.split(" ");
+    if (instructionsArr[1] == "1") {
+      stacks[parseInt(instructionsArr[5]) - 1].unshift(
+        stacks[parseInt(instructionsArr[3]) - 1].shift(),
+      );
       continue;
     }
     let temp = [];
-    for (let j = 0; j < parseInt(instruction_arr[1]); j++) {
-      temp.push(stacks[parseInt(instruction_arr[3]) - 1].shift());
+    for (let j = 0; j < parseInt(instructionsArr[1]); j++) {
+      temp.push(stacks[parseInt(instructionsArr[3]) - 1].shift());
     }
-    for (let j = 0; j < parseInt(instruction_arr[1]); j++) {
-      stacks[parseInt(instruction_arr[5]) - 1].unshift(temp.pop());
+    for (let j = 0; j < parseInt(instructionsArr[1]); j++) {
+      stacks[parseInt(instructionsArr[5]) - 1].unshift(temp.pop());
     }
   }
-  let output = [];
-  for (let stack of stacks) {
-    output.push(stack[0]);
-  }
-  return output.join("");
+  return stacks.flatMap((stack) => stack[0]).join("");
 };
 
 run({
