@@ -1,21 +1,18 @@
 import run from "aocrunner";
 
-const parseInput = (rawInput) => rawInput.split('');
+const parseInput = (rawInput) => rawInput.split("");
 
-const part1 = (rawInput) => {
-  const input = parseInput(rawInput);
-  for (let i=3;i<input.length;i++) {
-    let subArr = input.slice(i-3,i+1);
-    if (subArr.filter((item, index) => subArr.indexOf(item) != index).length == 0)
-      return i+1
+const findMarker = (input, num) => {
+  for (let i = num; i < input.length; i++) {
+    let arr = input.slice(i - num, i + 1);
+    if (arr.filter((item, index) => arr.indexOf(item) != index).length == 0)
+      return i + 1;
   }
 };
 
-const part2 = (rawInput) => {
-  const input = parseInput(rawInput);
+const part1 = (rawInput) => findMarker(parseInput(rawInput), 3);
 
-  return;
-};
+const part2 = (rawInput) => findMarker(parseInput(rawInput), 13);
 
 run({
   part1: {
@@ -29,10 +26,10 @@ run({
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `mjqjpqmgbljsphdztnvjfqwrcgsmlb`,
+        expected: 19,
+      },
     ],
     solution: part2,
   },
