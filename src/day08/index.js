@@ -7,7 +7,7 @@ const part1 = (rawInput) => {
   const input = parseInput(rawInput);
   let num = 0;
   for (let i = 1; i < input.length - 1; i++) {
-    for (let j = 1; j < input.length - 1; j++) {
+    for (let j = 1; j < input[0].length - 1; j++) {
       const row = input[i];
       const column = input.map((line) => line[j]);
 
@@ -30,10 +30,31 @@ const part1 = (rawInput) => {
   return num + input.length * 2 + input[0].length * 2 - 4;
 };
 
+const calcView = (arr, item) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] >= item) return i + 1;
+  }
+  return arr.length;
+};
+
 const part2 = (rawInput) => {
   const input = parseInput(rawInput);
+  let maxScore = 0;
+  for (let i = 1; i < input.length - 1; i++) {
+    for (let j = 1; j < input[0].length - 1; j++) {
+      const row = input[i];
+      const column = input.map((line) => line[j]);
+      const item = input[i][j];
+      const itemMaxScore =
+        calcView(row.slice(0, j).reverse(), item) *
+        calcView(row.slice(j + 1), item) *
+        calcView(column.slice(0, i).reverse(), item) *
+        calcView(column.slice(i + 1), item);
 
-  return;
+      if (itemMaxScore > maxScore) maxScore = itemMaxScore;
+    }
+  }
+  return maxScore;
 };
 
 run({
@@ -54,10 +75,16 @@ run({
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `
+        30373
+        25512
+        65332
+        33549
+        35390
+        `,
+        expected: 8,
+      },
     ],
     solution: part2,
   },
