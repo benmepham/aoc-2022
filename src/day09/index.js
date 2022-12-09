@@ -5,43 +5,6 @@ const parseInput = (rawInput) => rawInput.split("\n");
 const moveRequired = (posT, posH) =>
   !(Math.abs(posT[0] - posH[0]) <= 1 && Math.abs(posT[1] - posH[1]) <= 1);
 
-const part1 = (rawInput) => {
-  const input = parseInput(rawInput);
-  const tailSet = new Set();
-  let currH = [0, 0];
-  let currT = [0, 0];
-  tailSet.add(currT.toString());
-
-  for (let line of input) {
-    let lineArr = line.split(" ");
-    for (let i = 0; i < parseInt(lineArr[1]); i++) {
-      const moveT = [...currH];
-      switch (lineArr[0]) {
-        case "R":
-          currH = [currH[0], currH[1] + 1];
-          break;
-        case "L":
-          currH = [currH[0], currH[1] - 1];
-          break;
-        case "U":
-          currH = [currH[0] - 1, currH[1]];
-          break;
-        case "D":
-          currH = [currH[0] + 1, currH[1]];
-          break;
-        default:
-          return;
-      }
-      if (moveRequired(currT, currH)) {
-        tailSet.add(currT.toString());
-        currT = [...moveT];
-        tailSet.add(currT.toString());
-      }
-    }
-  }
-  return tailSet.size;
-};
-
 const decideMove = (posT, posH) => {
   // Diagonals
   if ((posH[0] - posT[0]) % 2 == 0 && (posH[1] - posT[1]) % 2 == 0)
@@ -49,19 +12,18 @@ const decideMove = (posT, posH) => {
       posT[0] + (posH[0] - posT[0]) / 2,
       posT[1] + (posH[1] - posT[1]) / 2,
     ];
-  // row only
+  // row
   if ((posH[0] - posT[0]) % 2 == 0)
     return [posT[0] + (posH[0] - posT[0]) / 2, posH[1]];
-  // col only
+  // col
   if ((posH[1] - posT[1]) % 2 == 0)
     return [posH[0], posT[1] + (posH[1] - posT[1]) / 2];
 };
 
-const part2 = (rawInput) => {
-  const input = parseInput(rawInput);
+const combinedCalc = (input, num) => {
   const tailSet = new Set();
-  const posArr = Array(10).fill([0, 0]);
-  tailSet.add(posArr[9].toString());
+  const posArr = Array(num).fill([0, 0]);
+  tailSet.add(posArr[num - 1].toString());
 
   for (const line of input) {
     const lineArr = line.split(" ");
@@ -87,12 +49,15 @@ const part2 = (rawInput) => {
       for (let j = 1; j < posArr.length; j++)
         if (moveRequired(posArr[j], posArr[j - 1]))
           posArr[j] = [...decideMove(posArr[j], posArr[j - 1])];
-      tailSet.add(posArr[9].toString());
+      tailSet.add(posArr[num - 1].toString());
     }
   }
-
   return tailSet.size;
 };
+
+const part1 = (rawInput) => combinedCalc(parseInput(rawInput), 2);
+
+const part2 = (rawInput) => combinedCalc(parseInput(rawInput), 10);
 
 run({
   part1: {
