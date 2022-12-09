@@ -42,10 +42,56 @@ const part1 = (rawInput) => {
   return tailSet.size;
 };
 
+const decideMove = (posT, posH) => {
+  // Diagonals
+  if ((posH[0] - posT[0]) % 2 == 0 && (posH[1] - posT[1]) % 2 == 0)
+    return [
+      posT[0] + (posH[0] - posT[0]) / 2,
+      posT[1] + (posH[1] - posT[1]) / 2,
+    ];
+  // row only
+  if ((posH[0] - posT[0]) % 2 == 0)
+    return [posT[0] + (posH[0] - posT[0]) / 2, posH[1]];
+  // col only
+  if ((posH[1] - posT[1]) % 2 == 0)
+    return [posH[0], posT[1] + (posH[1] - posT[1]) / 2];
+};
+
 const part2 = (rawInput) => {
   const input = parseInput(rawInput);
+  const tailSet = new Set();
+  const posArr = Array(10).fill([0, 0]);
+  tailSet.add(posArr[9].toString());
 
-  return;
+  for (const line of input) {
+    const lineArr = line.split(" ");
+    for (let i = 0; i < parseInt(lineArr[1]); i++) {
+      let currH = [...posArr[0]];
+      switch (lineArr[0]) {
+        case "R":
+          currH = [currH[0], currH[1] + 1];
+          break;
+        case "L":
+          currH = [currH[0], currH[1] - 1];
+          break;
+        case "U":
+          currH = [currH[0] - 1, currH[1]];
+          break;
+        case "D":
+          currH = [currH[0] + 1, currH[1]];
+          break;
+        default:
+          return;
+      }
+      posArr[0] = [...currH];
+      for (let j = 1; j < posArr.length; j++)
+        if (moveRequired(posArr[j], posArr[j - 1]))
+          posArr[j] = [...decideMove(posArr[j], posArr[j - 1])];
+      tailSet.add(posArr[9].toString());
+    }
+  }
+
+  return tailSet.size;
 };
 
 run({
@@ -69,10 +115,19 @@ run({
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `
+        R 5
+        U 8
+        L 8
+        D 3
+        R 17
+        D 10
+        L 25
+        U 20
+        `,
+        expected: 36,
+      },
     ],
     solution: part2,
   },

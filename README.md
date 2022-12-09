@@ -19,7 +19,7 @@
 [![Day](https://badgen.net/badge/06/%E2%98%85%E2%98%85/green)](src/day06)
 [![Day](https://badgen.net/badge/07/%E2%98%85%E2%98%85/green)](src/day07)
 [![Day](https://badgen.net/badge/08/%E2%98%85%E2%98%85/green)](src/day08)
-![Day](https://badgen.net/badge/09/%E2%98%86%E2%98%86/gray)
+[![Day](https://badgen.net/badge/09/%E2%98%85%E2%98%85/green)](src/day09)
 ![Day](https://badgen.net/badge/10/%E2%98%86%E2%98%86/gray)
 ![Day](https://badgen.net/badge/11/%E2%98%86%E2%98%86/gray)
 ![Day](https://badgen.net/badge/12/%E2%98%86%E2%98%86/gray)
@@ -77,63 +77,63 @@ Use correct node version (need nvm installed): `nvm use`
 Day 01
 Time part 1: 0.532ms
 Time part 2: 0.493ms
-Both parts: 1.0253999999999999ms
+Both parts: 1.025ms
 ```
 
 ```
 Day 02
 Time part 1: 0.39ms
 Time part 2: 2.275ms
-Both parts: 2.665471ms
+Both parts: 2.665ms
 ```
 
 ```
 Day 03
 Time part 1: 0.407ms
 Time part 2: 0.207ms
-Both parts: 0.6140399999999999ms
+Both parts: 0.614ms
 ```
 
 ```
 Day 04
 Time part 1: 2.46ms
 Time part 2: 2.236ms
-Both parts: 4.696166ms
+Both parts: 4.696ms
 ```
 
 ```
 Day 05
 Time part 1: 1.514ms
 Time part 2: 2.07ms
-Both parts: 3.5842530000000004ms
+Both parts: 3.584ms
 ```
 
 ```
 Day 06
 Time part 1: 1.643ms
 Time part 2: 5.386ms
-Both parts: 7.029233ms
+Both parts: 7.029ms
 ```
 
 ```
 Day 07
 Time part 1: 14.318ms
 Time part 2: 16.963ms
-Both parts: 31.280458000000003ms
+Both parts: 31.28ms
 ```
 
 ```
 Day 08
-Time part 1: 68.844ms
-Time part 2: 43.833ms
-Both parts: 112.676828ms
+Time part 1: 76.081ms
+Time part 2: 40.172ms
+Both parts: 116.253ms
 ```
 
 ```
 Day 09
-Time part 1: -
-Time part 2: -
-Both parts: -
+Time part 1: 14.429ms
+Time part 2: 18.385ms
+Both parts: 32.814ms
 ```
 
 ```
@@ -249,8 +249,8 @@ Both parts: -
 ```
 
 ```
-Total stars: 16/50
-Total time: 163.572ms
+Total stars: 18/50
+Total time: 199.962ms
 ```
 
 <!--/RESULTS-->
