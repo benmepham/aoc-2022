@@ -3,33 +3,37 @@ import run from "aocrunner";
 const parseInput = (rawInput) =>
   rawInput.split("\n").map((line) => line.split(" "));
 
-const part1 = (rawInput) => {
-  const input = parseInput(rawInput);
-  let startVal = 1;
+const calcSpritePos = (input) => {
+  let x = 1;
   let valX = [];
   for (const line of input) {
     if (line[0] === "noop") {
-      valX.push(startVal);
+      valX.push(x);
     } else if (line[0] === "addx") {
-      valX.push(startVal);
-      startVal += parseInt(line[1]);
-      valX.push(startVal);
+      valX.push(x);
+      x += parseInt(line[1]);
+      valX.push(x);
     }
   }
-  return (
-    valX[18] * 20 +
-    valX[58] * 60 +
-    valX[98] * 100 +
-    valX[138] * 140 +
-    valX[178] * 180 +
-    valX[218] * 220
-  );
+  return valX;
+};
+
+const part1 = (rawInput) => {
+  const valX = calcSpritePos(parseInput(rawInput));
+  let signalStrengthSum = 0;
+  for (let i = 20; i < valX.length; i += 40)
+    signalStrengthSum += valX[i - 2] * i;
+  return signalStrengthSum;
 };
 
 const part2 = (rawInput) => {
-  const input = parseInput(rawInput);
-
-  return;
+  const valX = calcSpritePos(parseInput(rawInput));
+  const crtOut = Array(240).fill(".");
+  for (let i = 0; i < 240; i++)
+    if (Math.abs(valX[i - 1] - (i % 40)) <= 1) crtOut[i] = "#";
+  for (let i = 0; i < crtOut.length; i += 40)
+    console.log(crtOut.slice(i, i + 40).join(" "));
+  return "crtOutput";
 };
 
 run({
