@@ -152,13 +152,13 @@
         "solved": true,
         "result": "11220",
         "attempts": [],
-        "time": 0.12307
+        "time": 0.20807
       },
       "part2": {
         "solved": true,
         "result": "crtOutput",
         "attempts": [],
-        "time": 0.491697
+        "time": 0.470202
       }
     },
     {
@@ -180,13 +180,13 @@
         "solved": true,
         "result": "497",
         "attempts": [],
-        "time": 61979.351705
+        "time": 89962.913008
       },
       "part2": {
         "solved": false,
-        "result": "NaN",
+        "result": "null",
         "attempts": [],
-        "time": 63617.271833
+        "time": 0.00238
       }
     },
     {

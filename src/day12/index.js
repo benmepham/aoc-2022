@@ -112,6 +112,7 @@ const part1 = (rawInput) => {
 
 // Works ONLY for test input
 const part2 = (rawInput) => {
+  return null;
   const [input, graph] = parseInput(rawInput);
   let lenArr = [];
   graph.forEach((sqr) => {
